@@ -1,52 +1,32 @@
 package main
 
 func isValid(s string) bool {
-	stack := [][]string{}
-
-	i := 0
 	n := len(s)
+	if n%2 != 0 {
+		return false
+	}
 
-	for i < n {
-		switch string(s[i]) {
-		case "(":
-			stack = append(stack, []string{"("})
-			i++
-		case ")":
-			if len(stack) > 0 {
-				if stack[len(stack)-1][0] != "(" {
-					return false
-				}
-				stack = stack[:len(stack)-1]
-				i++
-			} else {
+	stack := make([]rune, 0, n/2)
+
+	for _, char := range s {
+		switch char {
+		case '(', '[', '{':
+			stack = append(stack, char)
+		case ')':
+			if len(stack) == 0 || stack[len(stack)-1] != '(' {
 				return false
 			}
-		case "[":
-			stack = append(stack, []string{"["})
-			i++
-		case "]":
-			if len(stack) > 0 {
-				if stack[len(stack)-1][0] != "[" {
-					return false
-				}
-				stack = stack[:len(stack)-1]
-				i++
-			} else {
+			stack = stack[:len(stack)-1]
+		case ']':
+			if len(stack) == 0 || stack[len(stack)-1] != '[' {
 				return false
 			}
-		case "{":
-			stack = append(stack, []string{"{"})
-			i++
-		case "}":
-			if len(stack) > 0 {
-				if stack[len(stack)-1][0] != "{" {
-					return false
-				}
-				stack = stack[:len(stack)-1]
-				i++
-			} else {
+			stack = stack[:len(stack)-1]
+		case '}':
+			if len(stack) == 0 || stack[len(stack)-1] != '{' {
 				return false
 			}
+			stack = stack[:len(stack)-1]
 		default:
 			return false
 		}
