@@ -1,29 +1,13 @@
 package main
 
-import "math/big"
-
-func factorial(n int64) *big.Int {
-	result := big.NewInt(1)
-	for i := int64(2); i <= n; i++ {
-		result.Mul(result, big.NewInt(i))
-	}
-	return result
-}
-
 func getRow(rowIndex int) []int {
-	var res []int
+	res := make([]int, rowIndex+1)
+	res[0] = 1
 
-	rowFact := factorial(int64(rowIndex)) /* n! */
-
-	for i := 0; i <= rowIndex; i++ { /* nCk = n! / (k! * (n-k)!) */
-		iFact := factorial(int64(i))                    /* k! */
-		rowMinusIFact := factorial(int64(rowIndex - i)) /* (n-k)! */
-
-		denominator := new(big.Int).Mul(iFact, rowMinusIFact) /* k! * (n-k)! */
-		fact := new(big.Int).Div(rowFact, denominator)        /* n! / (k! * (n-k)!) */
-
-		factInt := int(fact.Int64())
-		res = append(res, factInt)
+	for i := 1; i <= rowIndex; i++ {
+		for j := i; j > 0; j-- {
+			res[j] = res[j] + res[j-1]
+		}
 	}
 
 	return res
