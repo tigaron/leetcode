@@ -1,23 +1,16 @@
 package main
 
 func climbStairs(n int) int {
-	if n == 1 {
+	if n <= 1 {
 		return 1
 	}
 
-	if n == 2 {
-		return 2
+	curr, prev := 1, 1
+
+	for range n - 1 {
+		curr = prev + curr
+		prev = curr - prev
 	}
 
-	count := 0
-	stepOne := 1
-	stepTwo := 2
-
-	for i := 3; i <= n; i++ {
-		count = stepOne + stepTwo
-		stepOne = stepTwo
-		stepTwo = count
-	}
-
-	return count
+	return curr
 }
