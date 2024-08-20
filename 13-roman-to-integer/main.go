@@ -13,18 +13,17 @@ func romanToInt(s string) int {
 
 	var ans int
 
-	for i := 0; i < len(s); i++ {
+	for i := len(s) - 1; i >= 0; i-- {
 		curr := symbol[string(s[i])]
-		next := 0
-		if i+1 < len(s) {
-			next = symbol[string(s[i+1])]
+		if i-1 >= 0 {
+			next := symbol[string(s[i-1])]
+			if curr > next {
+				ans += curr - next
+				i--
+				continue
+			}
 		}
-		if curr < next {
-			ans += next - curr
-			i++
-		} else {
-			ans += curr
-		}
+		ans += curr
 	}
 
 	return ans
