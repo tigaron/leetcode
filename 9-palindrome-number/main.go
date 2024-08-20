@@ -5,18 +5,14 @@ func isPalindrome(x int) bool {
 		return false
 	}
 
-	digits := []int{}
+	copy := x
+	var check int
 
 	for x > 0 {
-		digits = append(digits, x%10)
+		digit := x % 10
+		check = (check * 10) + digit
 		x /= 10
 	}
 
-	for i := 0; i < len(digits); i++ {
-		if digits[i] != digits[len(digits)-1-i] {
-			return false
-		}
-	}
-
-	return true
+	return copy == check
 }
