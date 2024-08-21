@@ -1,16 +1,17 @@
 package main
 
 func removeDuplicates(nums []int) int {
-	hm := make(map[int]int)
+	prev := nums[0]
+	ans := 1
 
-	for i := range nums {
-		if _, ok := hm[nums[i]]; !ok {
-			nums[len(hm)] = nums[i]
-			hm[nums[i]] = 1
-		} else {
-			hm[nums[i]] += 1
+	for i := 1; i < len(nums); i++ {
+		if nums[i] != prev {
+			nums[ans] = nums[i]
+			ans++
 		}
+
+		prev = nums[i]
 	}
 
-	return len(hm)
+	return ans
 }
